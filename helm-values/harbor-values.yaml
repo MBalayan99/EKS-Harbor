@@ -1,0 +1,16 @@
+# 🔐 UPDATED `helm-values/harbor-values.yaml`
+
+expose:
+  type: ingress
+  tls:
+    enabled: true
+
+externalURL: https://harbor.armguardians.org
+
+harborAdminPassword: "Harbor12345"
+
+metrics:
+  enabled: true
+# Default admin user is always: admin
+# Username: admin
+# Password: Harbor12345
