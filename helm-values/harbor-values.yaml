@@ -1,5 +1,3 @@
-# 🔐 UPDATED `helm-values/harbor-values.yaml`
-
 expose:
   type: ingress
   tls:
@@ -11,6 +9,9 @@ harborAdminPassword: "Harbor12345"
 
 metrics:
   enabled: true
+  serviceMonitor:
+    enabled: true
+
 # Default admin user is always: admin
 # Username: admin
 # Password: Harbor12345
