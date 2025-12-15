@@ -1,48 +1,75 @@
+# =========================
+# Grafana
+# =========================
 grafana:
   enabled: true
-
-  adminUser: admin
-  adminPassword: Grafana12345
+  adminPassword: "Admin12345"
 
   service:
     type: ClusterIP
 
+  defaultDashboardsEnabled: true
+
+# =========================
+# Prometheus
+# =========================
 prometheus:
   enabled: true
 
   prometheusSpec:
     retention: 7d
+    scrapeInterval: 30s
+    evaluationInterval: 30s
 
-    additionalPrometheusRules:
-      - name: eks-alerts
-        groups:
-          - name: EKS Alerts
-            rules:
-              - alert: HighCPUUsage
-                expr: |
-                  sum(rate(container_cpu_usage_seconds_total{namespace!~"kube-system"}[5m]))
-                  /
-                  sum(container_spec_cpu_limit_cores{namespace!~"kube-system"})
-                  > 0.8
-                for: 5m
-                labels:
-                  severity: warning
-                annotations:
-                  summary: "High CPU usage detected"
-                  description: "CPU usage is above 80% for more than 5 minutes"
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
 
-              - alert: HighMemoryUsage
-                expr: |
-                  sum(container_memory_usage_bytes{namespace!~"kube-system"})
-                  /
-                  sum(container_spec_memory_limit_bytes{namespace!~"kube-system"})
-                  > 0.8
-                for: 5m
-                labels:
-                  severity: warning
-                annotations:
-                  summary: "High memory usage detected"
-                  description: "Memory usage is above 80% for more than 5 minutes"
+    resources:
+      requests:
+        cpu: 200m
+        memory: 512Mi
+      limits:
+        memory: 1Gi
 
+# =========================
+# Alertmanager
+# =========================
 alertmanager:
   enabled: true
+
+  alertmanagerSpec:
+    replicas: 1
+
+# =========================
+# Node / Cluster metrics
+# =========================
+kubeStateMetrics:
+  enabled: true
+
+nodeExporter:
+  enabled: true
+
+kubelet:
+  enabled: true
+
+kubeApiServer:
+  enabled: true
+
+kubeControllerManager:
+  enabled: true
+
+kubeScheduler:
+  enabled: true
+
+# =========================
+# Default alert rules
+# =========================
+defaultRules:
+  create: true
+  rules:
+    kubeApiserver: true
+    kubelet: true
+    kubeNode: true
+    kubePod: true
+    kubeDeployment: true
+    node: true
