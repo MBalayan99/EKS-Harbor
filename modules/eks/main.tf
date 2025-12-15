@@ -14,10 +14,9 @@ module "eks" {
     spot = {
       instance_types = ["t3a.small"]
       capacity_type  = "SPOT"
-
-      desired_size = 2
-      min_size     = 2
-      max_size     = 2
+      desired_size   = 2
+      min_size       = 2
+      max_size       = 2
 
       labels = {
         lifecycle = "spot"
@@ -34,3 +33,7 @@ module "eks" {
     }
   }
 }
+
+output "cluster_id" { value = module.eks.cluster_id }
+output "cluster_endpoint" { value = module.eks.cluster_endpoint }
+output "cluster_ca_certificate" { value = module.eks.cluster_certificate_authority_data }
