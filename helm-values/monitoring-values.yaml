@@ -10,6 +10,13 @@ grafana:
 
   defaultDashboardsEnabled: true
 
+  # 🔥 AUTO-LOAD CUSTOM DASHBOARDS (Harbor)
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      folder: "Custom"
+
 # =========================
 # Prometheus
 # =========================
