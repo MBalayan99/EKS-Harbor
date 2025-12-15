@@ -1,3 +1,10 @@
+variable "vpc_id" {
+  description = "VPC ID for EKS"
+  type        = string
+}
 
-variable "vpc_id" {}
-variable "private_subnets" {}
+variable "private_subnets" {
+  description = "Private subnet IDs"
+  type        = list(string)
+}
+
