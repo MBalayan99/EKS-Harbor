@@ -7,4 +7,6 @@ resource "helm_release" "monitoring" {
   create_namespace = true
 
   values = [file("${path.module}/../../helm-values/monitoring-values.yaml")]
+
+  depends_on = [ module.eks ]
 }
