@@ -1,4 +1,3 @@
-
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.0"
@@ -15,9 +14,10 @@ module "eks" {
     spot = {
       instance_types = ["t3a.small"]
       capacity_type  = "SPOT"
-      desired_size   = 2
-      min_size       = 2
-      max_size       = 2
+
+      desired_size = 2
+      min_size     = 2
+      max_size     = 2
 
       labels = {
         lifecycle = "spot"
