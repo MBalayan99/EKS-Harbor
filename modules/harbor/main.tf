@@ -7,4 +7,6 @@ resource "helm_release" "harbor" {
   create_namespace = true
 
   values = [file("${path.module}/../../helm-values/harbor-values.yaml")]
+
+  depends_on = [ module.eks ]
 }
